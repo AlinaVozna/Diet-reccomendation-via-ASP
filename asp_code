@@ -1,0 +1,117 @@
+
+% Determine if a user is vegetarian
+is_vegetarian(Name, true) :- vegetarian(Name, true).
+is_vegetarian(Name, false) :- user(Name, _, _), not vegetarian(Name, true).
+
+% Compatibility with vegetarian dishes
+vegetarian_compatible(Name, RecipeID) :-
+    user(Name, _, _),
+    recipe(RecipeID, _, _),
+    is_vegetarian(Name, true),
+    vegetarian(RecipeID, true).
+
+vegetarian_compatible(Name, RecipeID) :-
+    user(Name, _, _),
+    recipe(RecipeID, _, _),
+    is_vegetarian(Name, false).
+
+
+% Allergen intolerance
+intolerance(Name, Allergen) :- allergy(Name, Allergen).
+
+has_conflicting_allergen(Name, RecipeID) :-
+    intolerance(Name, Allergen),
+    contains_allergen(RecipeID, Allergen).
+
+% Ingredient dislikes
+has_disliked_ingredient(Name, RecipeID) :-
+    dislikes(Name, Ingredient),
+    contains(RecipeID, Ingredient).
+
+preference_penalty(Name, RecipeID, 1) :- 
+    contains(RecipeID, Ingredient), 
+    mild_dislike(Name, Ingredient).
+
+% General compatibility
+compatible(Name, RecipeID) :-
+    user(Name, _, _),
+    recipe(RecipeID, _, _),
+    vegetarian_compatible(Name, RecipeID),
+    not has_conflicting_allergen(Name, RecipeID),
+    not has_disliked_ingredient(Name, RecipeID).
+
+% Assign compatible recipes
+{ assign(Name, RecipeID, Course) } :-
+    user(Name, _, _),
+    recipe(RecipeID, _, Course),
+    compatible(Name, RecipeID).
+
+% Ensure one dish per course type per user only if compatible dish exists
+:- user(Name, _, _), dish_type(Course),
+   not 1 { assign(Name, _, Course) } 1,
+   1 { recipe(R, _, Course) : compatible(Name, R) }.
+
+% Nutritional totals per user
+person(Name) :- user(Name, _, _).
+
+total_calories(Name, Total) :-
+    person(Name),
+    Total = #sum { C : assign(Name, R, _), macronutrients(R, C, _, _, _) }.
+
+total_proteins(Name, Total) :-
+    person(Name),
+    Total = #sum { P : assign(Name, R, _), macronutrients(R, _, P, _, _) }.
+
+total_carbs(Name, Total) :-
+    person(Name),
+    Total = #sum { K : assign(Name, R, _), macronutrients(R, _, _, K, _) }.
+
+total_fats(Name, Total) :-
+    person(Name),
+    Total = #sum { F : assign(Name, R, _), macronutrients(R, _, _, _, F) }.
+
+%Limits
+calorie_limit(Name, Limit) :-
+    daily_needs(Name, Kcal, _, _, _),
+    Limit = Kcal * 5 / 10.
+
+protein_limit(Name, Limit) :-
+    daily_needs(Name, _, Prot, _, _),
+    Limit = Prot * 6 / 10.
+
+carb_limit(Name, Limit) :-
+    daily_needs(Name, _, _, Carb, _),
+    Limit = Carb * 4 / 10.
+
+fat_limit(Name, Limit) :-
+    daily_needs(Name, _, _, _, Fat),
+    Limit = Fat * 11 / 10.
+
+
+:- total_calories(Name, C), calorie_limit(Name, Limit), C < Limit.
+:- total_proteins(Name, P), protein_limit(Name, Limit), P < Limit.
+:- total_carbs(Name, K), carb_limit(Name, Limit), K < Limit.
+:- total_fats(Name, F), fat_limit(Name, Limit), F > Limit.
+
+#minimize {
+    5 : preference_penalty(Name, RecipeID, 1), assign(Name, RecipeID, _);
+    C : total_calories(Name, C);
+    -P : total_proteins(Name, P);
+    K : total_carbs(Name, K);
+    F : total_fats(Name, F)
+}.
+
+
+
+% Recipe name output
+suggest(Name, RecipeName, CourseType) :-
+    assign(Name, RecipeID, CourseType),
+    recipe(RecipeID, RecipeName, CourseType).
+
+% Show outputs
+#show suggest/3.
+#show assign/3.
+#show total_calories/2.
+#show total_proteins/2.
+#show total_carbs/2.
+#show total_fats/2.
