@@ -1,0 +1,186 @@
+% USERS
+user("Diana", 28, "female").
+daily_needs("Diana", 2200, 75, 270, 70).
+allergy("Diana", "lactose").
+vegetarian("Diana", true).
+user("Eve", 22, "female").
+allergy("Eve", "gluten").
+daily_needs("Eve", 1900, 65, 240, 55).
+
+% RECIPES
+recipe("1", "pasta_al_pesto", "main_course").
+contains_lactose("1", false).
+contains_gluten("1", true).
+contains_nuts("1", true).
+vegetarian("1", false).
+macronutrients("1", 450, 12, 85, 5).
+
+recipe("2", "risotto_ai_funghi", "main_course").
+contains_lactose("2", false).
+contains_gluten("2", false).
+vegetarian("2", true).
+macronutrients("2", 380, 8, 70, 4).
+
+recipe("3", "branzino_al_forno", "second_course").
+contains_lactose("3", false).
+contains_gluten("3", false).
+macronutrients("3", 250, 30, 0, 8).
+
+recipe("4", "frittata_di_zucchine", "second_course").
+contains_lactose("4", false).
+contains_gluten("4", false).
+contains_eggs("4", true).
+vegetarian("4", true).
+macronutrients("4", 280, 15, 5, 12).
+
+recipe("5", "panna_cotta", "dessert").
+contains_lactose("5", true).
+contains_gluten("5", false).
+vegetarian("5", true).
+macronutrients("5", 400, 6, 35, 25).
+
+recipe("6", "minestrone_di_verdure", "main_course").
+contains_lactose("6", false).
+contains_gluten("6", false).
+vegetarian("6", true).
+macronutrients("6", 300, 10, 60, 5).
+
+recipe("7", "pollo_alla_griglia", "second_course").
+contains_lactose("7", false).
+contains_gluten("7", false).
+vegetarian("7", false).
+macronutrients("7", 320, 35, 0, 8).
+
+recipe("8", "vellutata_di_zucca", "main_course").
+contains_lactose("8", false).
+contains_gluten("8", false).
+vegetarian("8", true).
+macronutrients("8", 200, 4, 40, 6).
+
+recipe("9", "tiramisu", "dessert").
+contains_lactose("9", true).
+contains_gluten("9", false).
+contains_eggs("9", true).
+vegetarian("9", true).
+macronutrients("9", 450, 8, 50, 20).
+
+recipe("10", "bistecca_alla_fiorentina", "second_course").
+contains_lactose("10", false).
+contains_gluten("10", false).
+vegetarian("10", false).
+macronutrients("10", 600, 50, 0, 30).
+
+recipe("11", "sorbetto_al_limone", "dessert").
+contains_lactose("11", false).
+contains_gluten("11", false).
+vegetarian("11", true).
+macronutrients("11", 150, 1, 35, 0).
+
+recipe("12", "frutta_fresca", "dessert").
+contains_lactose("12", false).
+contains_gluten("12", false).
+vegetarian("12", true).
+macronutrients("12", 120, 1, 30, 0).
+
+recipe("13", "quinoa_con_verdure", "main_course").
+contains_lactose("13", false).
+contains_gluten("13", false).
+vegetarian("13", true).
+macronutrients("13", 400, 15, 70, 10).
+
+recipe("14", "pizza_margherita", "main_course").
+contains_lactose("14", true).
+contains_gluten("14", true).
+vegetarian("14", true).
+macronutrients("14", 600, 20, 90, 15).
+
+recipe("15", "lasagna_classica", "main_course").
+contains_lactose("15", true).
+contains_gluten("15", true).
+vegetarian("15", false).
+macronutrients("15", 700, 25, 80, 30).
+
+recipe("16", "insalata_greca", "side_dish").
+contains_lactose("16", true).
+contains_gluten("16", false).
+vegetarian("16", true).
+macronutrients("16", 250, 6, 10, 20).
+
+recipe("17", "carbonara", "main_course").
+contains_lactose("17", true).
+contains_gluten("17", true).
+contains_eggs("17", true).
+vegetarian("17", false).
+macronutrients("17", 500, 20, 60, 20).
+
+recipe("18", "filetto_di_manzo", "second_course").
+contains_lactose("18", false).
+contains_gluten("18", false).
+vegetarian("18", false).
+macronutrients("18", 400, 45, 0, 15).
+
+recipe("19", "parmigiana_di_melanzane", "main_course").
+contains_lactose("19", true).
+contains_gluten("19", false).
+vegetarian("19", true).
+macronutrients("19", 450, 18, 40, 25).
+
+recipe("20", "crema_di_zuppa_di_pomodoro", "main_course").
+contains_lactose("20", false).
+contains_gluten("20", false).
+vegetarian("20", true).
+macronutrients("20", 200, 3, 25, 5).
+
+recipe("21", "torta_alle_mele", "dessert").
+contains_lactose("21", false).
+contains_gluten("21", true).
+vegetarian("21", true).
+macronutrients("21", 300, 4, 60, 10).
+
+recipe("22", "calzone_farcito", "second_course").
+contains_lactose("22", true).
+contains_gluten("22", true).
+vegetarian("22", false).
+macronutrients("22", 550, 22, 70, 15).
+
+recipe("23", "zucchine_grigliate", "side_dish").
+contains_lactose("23", false).
+contains_gluten("23", false).
+vegetarian("23", true).
+macronutrients("23", 120, 2, 10, 5).
+
+recipe("24", "pollo_al_curry", "second_course").
+contains_lactose("24", false).
+contains_gluten("24", false).
+vegetarian("24", false).
+macronutrients("24", 450, 40, 5, 15).
+
+recipe("25", "insalata_di_riso", "main_course").
+contains_lactose("25", false).
+contains_gluten("25", false).
+vegetarian("25", true).
+macronutrients("25", 320, 10, 60, 5).
+
+recipe("26", "pane_con_burro", "side_dish").
+contains_lactose("26", true).
+contains_gluten("26", true).
+vegetarian("26", true).
+macronutrients("26", 300, 7, 50, 12).
+
+recipe("27", "crostini_vegetali", "side_dish").
+contains_lactose("27", false).
+contains_gluten("27", true).
+vegetarian("27", true).
+macronutrients("27", 250, 5, 40, 8).
+
+recipe("28", "spezzatino_con_patate", "second_course").
+contains_lactose("28", false).
+contains_gluten("28", false).
+vegetarian("28", false).
+macronutrients("28", 500, 35, 30, 20).
+
+recipe("29", "zuppa_di_fagioli", "main_course").
+contains_lactose("29", false).
+contains_gluten("29", false).
+vegetarian("29", true).
+macronutrients("29", 350, 15, 50, 10).
