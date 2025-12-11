@@ -1,0 +1,45 @@
+% --- AGENT: Diana ---
+
+% 1. Initial Beliefs (Derived from Blueprint Persona)
+allergy(lactose).
+preference(bean_soup, 10).
+dislike(mushrooms).
+
+% 2. Receiving a Meal Proposal (External Event)
+% The event 'propose_mealE' triggers the validation action
+propose_mealE(Course, Recipe) :> 
+    validate_mealA(Course, Recipe).
+
+% 3. Validation Logic (Internal Reasoning)
+validate_mealA(Course, Recipe) :-
+    check_allergy(Recipe, StatusA),
+    check_preference(Recipe, StatusP),
+    decide_acceptance(Course, Recipe, StatusA, StatusP).
+
+% 4. Logic for Allergy (Implementing can_do)
+check_allergy(Recipe, ok) :-
+    not has_allergen(Recipe).
+check_allergy(Recipe, blocked) :-
+    has_allergen(Recipe).
+
+has_allergen(Recipe) :-
+    ingredient(Recipe, Ing),
+    allergy(Allergen),
+    contains_allergen(Ing, Allergen).
+
+% 5. Decision Logic (Internal Event Trigger)
+% If blocked, adopt intention to reject.
+decisionI(reject, Recipe) :- 
+    check_allergy(Recipe, blocked).
+
+% If ok, adopt intention to accept (goal).
+decisionI(accept, Recipe) :-
+    check_allergy(Recipe, ok).
+
+% 6. Reaction to Decision and Communication
+decisionI(reject, Recipe) :>
+    messageA(robot, reject_proposal(Recipe, reason(allergy))).
+
+decisionI(accept, Recipe) :>
+    add_belief(intend(eat(Recipe))),
+    messageA(robot, accept_proposal(Recipe)).
