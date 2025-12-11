@@ -1,1 +1,1 @@
-# Diet-reccomendation-via-ASP
+# Diet-recommendations-via-ASP
